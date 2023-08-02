@@ -4,8 +4,8 @@ on:
   push:
     branches:
       - main
-#  schedule:
-#    - cron: "0 0 * * *"
+  schedule:
+    - cron: "0 9,16 */2 * *"
 
 jobs:
   autogreen:
@@ -15,14 +15,14 @@ jobs:
       contents: write
   
     steps:
-      - name: Clone repository
+      - name: test commit checkout
         uses: actions/checkout@v3
 
-      - name: Auto green
+      - name: test commit
         run: |
-          git config --local user.email "justjavac@gmail.com"
+          git config --local user.email "nenerzm@gmail.com"
           git config --local user.name "${{ github.actor }}"
           git remote set-url origin https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
           git pull --rebase
-          git commit --allow-empty -m "a commit a day keeps your girlfriend away"
+          git commit --allow-empty -m "test:  test  by ${{ github.actor }} sha ${{github.sha}} tp ${{github.run_attempt}}"
           git push
